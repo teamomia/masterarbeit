@@ -42,8 +42,8 @@ function sysCall_actuation()
     -- put your actuation code here
     --
     local t=sim.getSimlationTimeStep()
-    local accel=[0,400*math.cos(2*math.pi*t),0]
-    sim.addForce(h,) 
+    local force=[0,400*math.cos(2*math.pi*t),0]
+    sim.addForce(h,[0.0073,0.000054,1.2910],force) 
     -- For example:
     --
     -- local position=sim.getObjectPosition(handle,-1)
@@ -57,6 +57,12 @@ end
 
 function sysCall_cleanup()
     -- do some clean-up here
+end
+
+function sysCall_dynCallback(inData)
+    local t=sim.getSimlationTimeStep()
+    local force=[0,400*math.cos(2*math.pi*t),0]
+    sim.addForce(h+sim.handleflag_resetforce+sim.handleflag_resetforce,[0.0073,0.000054,1.2910],force) 
 end
 
 -- You can define additional system calls here:
@@ -110,4 +116,3 @@ function sysCall_afterCreate(inData)
     end
 end
 --]]
-
